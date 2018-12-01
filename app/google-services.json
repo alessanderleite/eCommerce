@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "625698153854",
+    "firebase_url": "https://ecommerce-dde2c.firebaseio.com",
+    "project_id": "ecommerce-dde2c",
+    "storage_bucket": "ecommerce-dde2c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625698153854:android:dcc7251ab9cee55e",
+        "android_client_info": {
+          "package_name": "com.example.alessander.ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625698153854-scj42h451lm1icr7aun54m84pmle3ab0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alessander.ecommerce",
+            "certificate_hash": "3ede52e6415b7661108bc5526341a268e96a6e78"
+          }
+        },
+        {
+          "client_id": "625698153854-q90vf500percgsn4hbc650mssmspim2i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRlBCWO1eAS0tTFOmKYdeD-Qw-dJbwBPo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625698153854-q90vf500percgsn4hbc650mssmspim2i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
