@@ -13,7 +13,7 @@
         android:layout_height="100dp"
         android:src="@drawable/applogo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"/>
+        android:layout_marginTop="195dp"/>
 
     <EditText
         android:id="@+id/login_phone_number_input"
