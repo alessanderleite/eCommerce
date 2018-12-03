@@ -1,6 +1,7 @@
 package com.example.alessander.ecommerce;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.alessander.ecommerce.model.Users;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -68,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void allowAccessToAccount(final String phone, String password) {
+    private void allowAccessToAccount(final String phone, final String password) {
 
         final DatabaseReference rootRef;
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -79,7 +81,19 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (dataSnapshot.child(parentDbName).child(phone).exists()) {
 
+                    Users usersData = dataSnapshot.child(parentDbName).child(phone).getValue(Users.class);
 
+                    if (usersData.getPhone().equals(phone)) {
+
+                        if (usersData.getPassword().equals(password)) {
+
+                            Toast.makeText(LoginActivity.this,"logged in Successfully...", Toast.LENGTH_SHORT).show();
+                            loadingBar.dismiss();
+
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                        }
+                    }
                 }
                 else {
 
