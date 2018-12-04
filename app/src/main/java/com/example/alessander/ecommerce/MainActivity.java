@@ -3,8 +3,13 @@ package com.example.alessander.ecommerce;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.alessander.ecommerce.prevalent.Prevalent;
+
+import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
         joinNowButton = (Button) findViewById(R.id.main_join_now_btn);
         loginButton = (Button) findViewById(R.id.main_login_btn);
+
+        Paper.init(this);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,5 +42,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        String userPhoneKey = Paper.book().read(Prevalent.userPhoneKey);
+        String userPasswordKey = Paper.book().read(Prevalent.userPasswordKey);
+
+        if (userPhoneKey != "" && userPasswordKey != "") {
+
+            if (!TextUtils.isEmpty(userPhoneKey) && !TextUtils.isEmpty(userPasswordKey)) {
+
+                
+            }
+        }
     }
 }

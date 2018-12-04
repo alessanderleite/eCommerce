@@ -12,11 +12,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.alessander.ecommerce.model.Users;
+import com.example.alessander.ecommerce.prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.rey.material.widget.CheckBox;
+
+import io.paperdb.Paper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
 
     private String parentDbName = "Users";
+    private CheckBox chkBoxRememberMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +41,12 @@ public class LoginActivity extends AppCompatActivity {
         inputPhoneNumber = (EditText) findViewById(R.id.login_phone_number_input);
         loadingBar = new ProgressDialog(this);
 
+        chkBoxRememberMe = (CheckBox) findViewById(R.id.remember_me_chkb);
+        Paper.init(this);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
                 loginUser();
             }
@@ -71,6 +79,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void allowAccessToAccount(final String phone, final String password) {
+
+        if (chkBoxRememberMe.isChecked()) {
+
+            Paper.book().write(Prevalent.userPhoneKey, phone);
+            Paper.book().write(Prevalent.userPasswordKey, password);
+        }
 
         final DatabaseReference rootRef;
         rootRef = FirebaseDatabase.getInstance().getReference();
