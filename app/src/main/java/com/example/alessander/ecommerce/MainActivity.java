@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (!TextUtils.isEmpty(userPhoneKey) && !TextUtils.isEmpty(userPasswordKey)) {
 
-                
+
             }
         }
     }
