@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if (usersData.getPassword().equals(password)) {
 
-                            Toast.makeText(MainActivity.this,"logged in Successfully...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"Please wait, you are already logged in...", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
 
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
