@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alessander.ecommerce.model.Users;
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputPhoneNumber, inputPassword;
     private Button loginButton;
     private ProgressDialog loadingBar;
+    private TextView adminLink, notAdminLink;
 
     private String parentDbName = "Users";
     private CheckBox chkBoxRememberMe;
@@ -39,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.login_btn);
         inputPassword = (EditText) findViewById(R.id.login_password_input);
         inputPhoneNumber = (EditText) findViewById(R.id.login_phone_number_input);
+        adminLink = (TextView) findViewById(R.id.admin_panel_link);
+        notAdminLink = (TextView) findViewById(R.id.not_admin_panel_link);
         loadingBar = new ProgressDialog(this);
 
         chkBoxRememberMe = (CheckBox) findViewById(R.id.remember_me_chkb);
@@ -49,6 +53,28 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 loginUser();
+            }
+        });
+
+        adminLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                loginButton.setText("Login Admin");
+                adminLink.setVisibility(View.INVISIBLE);
+                notAdminLink.setVisibility(View.VISIBLE);
+                parentDbName = "Admins";
+            }
+        });
+
+        notAdminLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                loginButton.setText("Login");
+                adminLink.setVisibility(View.VISIBLE);
+                notAdminLink.setVisibility(View.INVISIBLE);
+                parentDbName = "Users";
             }
         });
     }
