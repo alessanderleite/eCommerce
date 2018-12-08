@@ -26,7 +26,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
         hatsCaps = (ImageView) findViewById(R.id.hats_caps);
         walletsBagsPurses = (ImageView) findViewById(R.id.purses_bags_wallets);
         shoes = (ImageView) findViewById(R.id.shoes);
-        
+
         headPhonesHandFree = (ImageView) findViewById(R.id.headphones_handfree);
         laptops = (ImageView) findViewById(R.id.laptop_pc);
         watches = (ImageView) findViewById(R.id.watches);

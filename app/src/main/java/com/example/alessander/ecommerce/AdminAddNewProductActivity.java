@@ -15,6 +15,5 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
 
         categoryName = getIntent().getExtras().get("category").toString();
 
-        Toast.makeText(this, categoryName, Toast.LENGTH_SHORT).show();
     }
 }
