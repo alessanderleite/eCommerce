@@ -2,6 +2,7 @@ package com.example.alessander.ecommerce;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +13,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.common.internal.Objects;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class AdminAddNewProductActivity extends AppCompatActivity {
 
@@ -23,6 +38,8 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     private EditText inputProductName, inputProductDescription, inputProductPrice;
     private static final int galleryPick = 1;
     private Uri imageUri;
+    private String productRandomKey, downloadImageUrl;
+    private StorageReference productImagesRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +47,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_add_new_product);
 
         categoryName = getIntent().getExtras().get("category").toString();
+        productImagesRef = FirebaseStorage.getInstance().getReference().child("Product Images");
 
         addNewProductButton = (Button) findViewById(R.id.add_new_product);
         inputProductImage = (ImageView) findViewById(R.id.select_product_image);
@@ -111,6 +129,64 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
-        
+        productRandomKey = saveCurrentDate + saveCurrentTime;
+
+        final StorageReference filePath = productImagesRef.child(imageUri.getLastPathSegment() + productRandomKey + ".jpg");
+
+        final UploadTask uploadTask = filePath.putFile(imageUri);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                String message = e.toString();
+                Toast.makeText(AdminAddNewProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                Toast.makeText(AdminAddNewProductActivity.this,"Product Image upload successfully...", Toast.LENGTH_SHORT).show();
+
+                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+
+                        if (!task.isSuccessful()) {
+
+                            throw  task.getException();
+                        }
+
+                        downloadImageUrl = filePath.getDownloadUrl().toString();
+                        return filePath.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+
+                        if (task.isSuccessful()) {
+
+                            Toast.makeText(AdminAddNewProductActivity.this,"got the Product image Url Successfully...", Toast.LENGTH_SHORT).show();
+
+                            saveProductInfoToDatabase();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void saveProductInfoToDatabase() {
+
+        HashMap<String, Object> productMap = new HashMap<>();
+        productMap.put("pid", productRandomKey);
+        productMap.put("date", saveCurrentDate);
+        productMap.put("time", saveCurrentTime);
+        productMap.put("description", description);
+        productMap.put("image", downloadImageUrl);
+        productMap.put("category", categoryName);
+        productMap.put("price", price);
+        productMap.put("pname", pName);
     }
 }
