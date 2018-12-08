@@ -19,7 +19,11 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AdminAddNewProductActivity" />
-        <activity android:name=".AdminCategoryActivity"></activity>
+        <activity android:name=".AdminCategoryActivity" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
