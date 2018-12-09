@@ -11,7 +11,7 @@ import com.example.alessander.ecommerce.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView txtProductName, txtProductDescription;
+    public TextView txtProductName, txtProductDescription, txtProductPrice;
     public ImageView imageView;
     public ItemClickListener listener;
 
@@ -21,6 +21,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
         imageView = (ImageView) itemView.findViewById(R.id.product_image);
         txtProductName = (TextView) itemView.findViewById(R.id.product_name);
         txtProductDescription = (TextView) itemView.findViewById(R.id.product_description);
+        txtProductPrice = (TextView) itemView.findViewById(R.id.product_price);
     }
 
     public void setItemClickLestener(ItemClickListener listener) {
