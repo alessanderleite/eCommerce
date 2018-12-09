@@ -141,10 +141,12 @@ public class LoginActivity extends AppCompatActivity {
                                 loadingBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                Prevalent.currentOnlineUser = usersData;
                                 startActivity(intent);
                             }
                         }
                         else {
+
                             loadingBar.dismiss();
                             Toast.makeText(LoginActivity.this,"Password is incorrect.", Toast.LENGTH_SHORT).show();
                         }
